@@ -1,3 +1,14 @@
+import 'ol/ol.css';
+import Map from 'ol/Map';
+import View from 'ol/View';
+import TileLayer from 'ol/layer/Tile';
+import VectorLayer from 'ol/layer/Vector';
+import OSM from 'ol/source/OSM';
+import VectorSource from 'ol/source/Vector';
+import { Feature } from 'ol';
+import Point from 'ol/geom/Point';
+import { Icon, Style } from 'ol/style';
+
 class TaktZeichen {
   protected ctx: CanvasRenderingContext2D;
   protected canvas: HTMLCanvasElement;
@@ -8,6 +19,7 @@ class TaktZeichen {
     if (canvas.getContext) {
       let ctx = canvas.getContext("2d");
       if (!ctx) throw new Error("Canvas-Fehler");
+      ctx.scale(0.25, 0.25);
       this.ctx = ctx;
     } else {
       throw new Error("Canvas-Fehler")
@@ -91,7 +103,7 @@ class Einheit extends TaktZeichen {
   private setPunkte(anz: number) {
     if (anz == 3) this.createPunkt(60, 7);
     if (anz == 2) this.createPunkt(70, 7);
-    if (anz== 1 || anz == 3) this.createPunkt(80, 7);
+    if (anz == 1 || anz == 3) this.createPunkt(80, 7);
     if (anz == 2) this.createPunkt(90, 7);
     if (anz == 3) this.createPunkt(100, 7);
 
@@ -123,11 +135,38 @@ class Einheit extends TaktZeichen {
   }
 
 }
-
+/*
 document.body.appendChild(Fahrzeug.createAnhaenger("LiMa"))
 document.body.appendChild(Fahrzeug.createKraftfahrzeug("MTW ZTr"))
 document.body.appendChild(Fahrzeug.createKraftfahrzeug("GKW", true))
 document.body.appendChild(Fahrzeug.createKraftfahrzeug("MLW 1", false))
-document.body.appendChild(Einheit.createTrupp("B 1"))
-document.body.appendChild(Einheit.createGruppe("B 1"))
-document.body.appendChild(Einheit.createZug("TZ-W"))
+document.body.appendChild(Einheit.createTrupp("B"))
+document.body.appendChild(Einheit.createGruppe("B"))
+document.body.appendChild(Einheit.createZug("TZ-W"))*/
+
+var map = new Map({
+  layers: [
+    new TileLayer({
+      source: new OSM()
+    })
+  ],
+  target: 'map',
+  view: new View({
+    center: [0, 0],
+    zoom: 2
+  })
+});
+let icon = Einheit.createGruppe("B");
+let vs = new VectorSource();
+map.addLayer(new VectorLayer({
+  source: vs,
+  style: new Style({
+    image: new Icon({
+      img: icon,
+      //size: [200,300],
+      imgSize: [50,75]
+    })
+  })
+}));
+
+vs.addFeature(new Feature(new Point([0, 0])))

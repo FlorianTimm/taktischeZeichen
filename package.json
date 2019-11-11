@@ -1,0 +1,27 @@
+{
+  "name": "taktischezeichen",
+  "version": "1.0.0",
+  "description": "",
+  "main": "javascript.js",
+  "dependencies": {
+    "@types/ol": "^5.3.6",
+    "ol": "^6.1.1"
+  },
+  "devDependencies": {
+    "typescript": "^3.7.2"
+  },
+  "scripts": {
+    "start": "parcel *.htm",
+    "build": "parcel build --public-url . *.htm"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FlorianTimm/taktischeZeichen.git"
+  },
+  "author": "Florian Timm",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/FlorianTimm/taktischeZeichen/issues"
+  },
+  "homepage": "https://github.com/FlorianTimm/taktischeZeichen#readme"
+}
